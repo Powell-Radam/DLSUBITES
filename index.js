@@ -7,8 +7,7 @@ const session = require('express-session');
 const fileUpload = require('express-fileupload');
 app.set('view engine','hbs');
 
-//mongoose.connect('mongodb://localhost/DLSUBITESDB');
-mongoose.connect('mongodb+srv://paulradam_db_user:keEg4MlG2oXwZFJh@dlsubitesdb.jmtyzdk.mongodb.net/DLSUBITESDB');
+mongoose.connect('process.env.MONGODB_URI');
 
 const Post = require("./database/models/Post");
 const Comment = require("./database/models/Comment");
