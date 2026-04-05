@@ -5,9 +5,9 @@ const app = new express();
 const hbs = require('hbs');
 const session = require('express-session');
 const fileUpload = require('express-fileupload');
-app.set('view engine','hbs');
+require("dotenv").config();
 
-mongoose.connect('process.env.MONGODB_URI');
+mongoose.connect(process.env.MONGODB_URI);
 
 const Post = require("./database/models/Post");
 const Comment = require("./database/models/Comment");
