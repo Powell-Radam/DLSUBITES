@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1.0" />
+  <title>New Post - DLSU BITES</title>
+  <link rel="stylesheet" type="text/css" media="all" href="/css/style.css">
+</head>
+<body>
+
+  <header class="topbar">
+    <div class="left">
+      <div class="brand">
+        <a class="logo" href="/"><img src="/logo.png"></img></a>
+        <a class="sitename" href="/">DLSU BITES</a>
+      </div>
+    </div>
+    
+  </header>
+
+  <main class="container newpost-page">
+  <form id="newPostForm" class="newpost-card" action="/new-post" method="post">
+    <h1 class="newpost-title">Create New Post</h1>
+
+    <div class="field">
+      <label class="field-label" for="title">Title</label>
+      <input id="title" class="field-input" type="text" maxlength="80" name="title" required />
+    </div>
+
+    <div class="field">
+      <label class="field-label" for="location">Location</label>
+      <select id="location" name="location" class="field-input newpost-select" required>
+        <option value="" selected disabled>Select location</option>
+        <option value="LS">LS</option>
+        <option value="Agno">Agno</option>
+        <option value="Andrew">Andrew</option>
+        <option value="Bloeman">Bloeman</option>
+        <option value="Other">Other</option>
+      </select>
+    </div>
+
+    <div class="field">
+      <label class="field-label" for="store">Store Name</label>
+      <input id="store" class="field-input" type="text" maxlength="60" name="store" required />
+    </div>
+
+    <div class="field">
+      <label class="field-label" for="description">Description</label>
+      <textarea id="description" class="field-input newpost-textarea" rows="6" maxlength="600" name="description" required></textarea>
+    </div>
+
+    <div class="form-actions">
+      <a class="btn" href="/">Cancel</a>
+      <button class="btn primary" type="submit">Post</button>
+    </div>
+    
+    <p id="formHint" class="form-hint" hidden></p>
+    </form>
+  </main>
+  <script src="/js/new-post.js"></script>
+
+
+</body>
+</html>
+

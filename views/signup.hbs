@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>DLSU BITES</title>
+        <link rel="stylesheet" type="text/css" media="all" href="/css/style.css">
+    </head>
+    <body>
+        <header class="topbar">
+            <div class="left">
+                <div class="brand">
+                    <a class="logo" href="/"><img src="/logo.png"></img></a>
+                    <a class="sitename" href="/">DLSU BITES</a>
+                </div>
+            </div>  
+        </header>
+
+        <main class="login-page">
+            <div class="login-card">
+                {{#if error}}
+                    <p class="error">{{error}}</p>
+                {{/if}}
+                <form id="loginForm"  action="/signup" method="POST">
+
+                <label class="login-label">Username:</label>
+                <input type="text" id="username" name="username" required />
+
+                <label class="login-label">Password:</label>
+                <input type="password" id="password" name="password" />
+
+                <label class="login-label">Confirm Password:</label>
+                <input type="password" id="confirm-password" name="confirmPassword" />
+                
+                <button type="submit" class="login-btn">REGISTER</button>
+
+                <p class="createAccount">Already have an Account? <a href="/login" class="create-account">Login</a></p>
+                <br>
+                <a href="/" class="return">Back Home</a>
+                
+                </form>
+            </div>
+        </main>
+        <script src="/js/signup.js"></script>
+    </body>
+</html>
+

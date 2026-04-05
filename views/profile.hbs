@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Profile - DLSU BITES</title>
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+
+  <header class="topbar">
+    <div class="left">
+      <div class="brand">
+        <a class="logo" href="/"><img src="/logo.png"></img></a>
+        <a class="sitename" href="/">DLSU BITES</a>
+      </div>
+    </div>
+
+    <nav class="right">
+        {{#if user}}
+            <a href="/logout" id="logoutBtn" class="btn">Logout</a>
+            <a id="newPostLink" href="/new-post" class="btn">New Post</a>
+        {{else}}
+            <a id="loginBtn" href="/login" class="btn">Login / Signup</a>
+        {{/if}}
+    </nav>
+  </header>
+
+  <div class="sidebar">
+    <a href="/">Home</a>
+    {{#if user}}
+        <a href="/profile/{{user.username}}">Profile</a>
+    {{else}}
+        <a href="/login">Profile</a>
+    {{/if}}
+    
+  </div>
+
+  <main class="container">
+
+    <div class="profile-header">
+      <div class="profile-identity">
+        <img id="profilePic" class="profile-pic" src="{{profile.avatar}}" alt="Profile picture" />
+        <div class="profile-text">
+          <h1 class="profile-title">Profile</h1>
+
+          <p class="profile-sub">
+            <span class="profile-label">User: </span>
+            <span id="profileName" class="profile-name">{{profile.username}}</span><br>
+            {{#if error}}
+              <span class="error2">{{error}}</span>
+            {{/if}}
+          </p>
+          
+          {{#if isOwner}}
+            <div class="profile-actions">
+              <button id="editProfileBtn" class="btn ghost">Edit Profile</button>
+            </div>
+            
+          {{/if}}
+
+          <p class="profile-desc" id="profileDesc">{{profile.bio}}</p>
+        </div>
+      </div>
+      <form id="editProfilePanel" class="edit-profile" action="/profile/{{profile.username}}/edit" method="POST" enctype="multipart/form-data" hidden>
+              <h2 class="edit-title">Edit Profile</h2>
+
+              <div class="edit-row">
+                <label class="edit-label" for="profilePicInput">Profile picture</label>
+                <input id="profilePicInput" type="file" name="avatar" />
+              </div>
+
+              <div class="edit-row">
+                <label class="edit-label" for="profileDescInput">Description</label>
+                <textarea id="profileDescInput" rows="4" maxlength="200" name="bio" placeholder="Write something about yourself...">{{profile.bio}}</textarea>
+              </div>
+
+              <div class="edit-actions">
+                <button id="applyProfileBtn" class="btn primary" type="submit">Apply</button>
+                <button id="cancelProfileBtn" class="btn ghost" type="button">Cancel</button>
+              </div>
+            </form>
+    </div>
+
+    
+
+    <h2 class="profile-section-title">Posts</h2>
+    <div id="userPosts">
+      {{#if posts.length}}
+        {{#each posts}}
+
+          <article class="post-card">
+
+              <h2 class="post-title">
+                  <a class="post-link" href="/post/{{_id}}">
+                      {{title}}
+                  </a>
+              </h2>
+
+              <div class="post-meta">
+                  <a class="author profile-link" href="/profile/{{author}}">
+                      {{author}}
+                  </a>
+
+                  <span class="dot">•</span>
+
+                  <time class="date">
+                      {{createdAt}}
+                  </time>
+                  {{#if isEdited}}
+                    <span>•</span>
+                    <span>(edited)</span>
+                  {{/if}}
+              </div>
+
+              <div class="post-row">
+                  <span class="post-label">Location:</span>
+                  <span class="post-location">{{location}}</span>
+              </div>
+
+              <div class="post-row">
+                  <span class="post-label">Store:</span>
+                  <span class="store-name">{{store}}</span>
+              </div>
+
+              <p class="post-desc">
+                  {{description}}
+              </p>
+
+              
+              
+              <div class="post-actions">
+                  <button class="icon-btn upvote reaction {{#if liked}}active{{/if}}" type="button" data-post-id="{{_id}}" data-value="1">▲</button>
+                  <span class="counts vote-score" data-score-for="{{_id}}">{{score}}</span>
+                    <button class="icon-btn downvote reaction {{#if disliked}}active{{/if}}" type="button" data-post-id="{{_id}}" data-value="-1">▼</button>
+                  <a class="icon-btn comment" href="/post/{{_id}}">💬</a>
+                  <span class="counts" id="commentCount">{{commentCount}}</span>
+              </div>
+
+          </article>
+
+      {{/each}}
+    {{else}}
+      <p>No posts yet.</p>
+    {{/if}}
+    </div>
+
+  </main>
+  <script src="/js/profile.js"></script>
+  <script src="/js/reaction.js"></script>
+</body>
+</html>

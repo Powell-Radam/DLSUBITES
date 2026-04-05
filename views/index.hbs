@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>DLSU BITES</title>
+        <link rel="stylesheet" type="text/css" media="all" href="/css/style.css">
+
+
+    </head>
+    <body>
+        <header class="topbar">
+            <div class="left">
+                <div class="brand">
+                    <a class="logo" href="/"><img src="/logo.png"></img></a>
+                    <a class="sitename" href="/">DLSU BITES</a>
+                </div>
+                <a href="/about">About</a>
+            </div>
+            <div class="center">
+            <form method="get" action="/" class="search-bar">
+                <input type="search" name="search" class="search" placeholder="Search food spots or reviews" value="{{search}}"/>
+            </form>
+            
+            </div>
+            <nav class="right">
+                {{#if user}}
+                    <a href="/logout" id="logoutBtn" class="btn">Logout</a>
+                    <a id="newPostLink" href="/new-post" class="btn">New Post</a>
+                {{else}}
+                    <a id="loginBtn" href="/login" class="btn">Login / Signup</a>
+                {{/if}}
+            </nav>
+        </header>
+        <div class="sidebar">
+            <a href="/">Home</a>
+                {{#if user}}
+                    <a href="/profile/{{user.username}}">Profile</a>
+                {{else}}
+                    <a href="/login">Profile</a>
+                {{/if}}
+        </div>
+        
+        <main class="container">
+            <div class="feed-header">
+                <h1 class="feed-title">Posts</h1>
+                <form method="get" action="/" class="sort">
+                    <label for="sortSelect">Sort by</label>
+
+                    <input type="hidden" name="search" value="{{search}}">
+
+                    <select id="sortSelect" name="sort" onchange="this.form.submit()">
+
+                        <option value="recent" {{#if recentSelected}}selected{{/if}}>
+                            Most Recent
+                        </option>
+
+                        <option value="popular" {{#if popularSelected}}selected{{/if}}>
+                            Most Popular
+                        </option>
+                        <option value="comments" {{#if commentsSelected}}selected{{/if}}>
+                            Most Comments
+                        </option>
+
+                    </select>
+                </form>
+            </div>
+
+            
+            <div id="feed">
+                {{#each posts}}
+
+                    <article class="post-card">
+
+                        <h2 class="post-title">
+                            <a class="post-link" href="/post/{{_id}}">
+                                {{title}}
+                            </a>
+                        </h2>
+
+                        <div class="post-meta">
+                            <a class="author profile-link" href="/profile/{{author}}">
+                                {{author}}
+                            </a>
+
+                            <span class="dot">•</span>
+
+                            <time class="date">
+                                {{createdAt}}
+                            </time>
+
+                            {{#if isEdited}}
+                                <span>•</span>
+                                <span>(edited)</span>
+                            {{/if}}
+                        </div>
+
+                        <div class="post-row">
+                            <span class="post-label">Location:</span>
+                            <span class="post-location">{{location}}</span>
+                        </div>
+
+                        <div class="post-row">
+                            <span class="post-label">Store:</span>
+                            <span class="store-name">{{store}}</span>
+                        </div>
+
+                        <p class="post-desc">
+                            {{description}}
+                        </p>
+                        
+                        <div class="post-actions">
+                            <button class="icon-btn upvote reaction {{#if liked}}active{{/if}}"  type="button" data-post-id="{{_id}}" data-value="1">▲</button>
+                            <span class="counts vote-score" data-score-for="{{_id}}">{{score}}</span>
+                             <button class="icon-btn downvote reaction {{#if disliked}}active{{/if}}"  type="button" data-post-id="{{_id}}" data-value="-1">▼</button>
+                            <a class="icon-btn comment" href="/post/{{_id}}">💬</a>
+                            <span class="counts" id="commentCount">{{commentCount}}</span>
+                        </div>
+
+                    </article>
+
+                {{/each}}
+            </div>
+
+        </main>
+
+        <script src="/js/reaction.js"></script>
+        
+    </body>
+</html>

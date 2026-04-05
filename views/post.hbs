@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Post - DLSU BITES</title>
+  <link rel="stylesheet" type="text/css" media="all" href="/css/style.css">
+
+</head>
+
+<body>
+  <header class="topbar">
+    <div class="left">
+      <div class="brand">
+        <a class="logo" href="/"><img src="/logo.png"></img></a>
+        <a class="sitename" href="/">DLSU BITES</a>
+      </div>
+      <a href="/">Home</a>
+    </div>
+    <nav class="right">
+        {{#if user}}
+            <a href="/logout" id="logoutBtn" class="btn">Logout</a>
+            <a id="newPostLink" href="/new-post" class="btn">New Post</a>
+        {{else}}
+            <a id="loginBtn" href="/login" class="btn">Login / Signup</a>
+        {{/if}}
+    </nav>
+  </header>
+
+  <main class="post-page">
+    <div class="post-box" id="postBox">
+      <h1 class="post-title" id="postTitle">
+          {{post.title}}
+      </h1>
+      <div class="post-info">
+        <a class="author-link" href="/profile/{{post.author}}">
+            {{post.author}}
+        </a>
+        <span>•</span>
+        <span class="date">
+            {{post.createdAt}}
+        </span>
+        {{#if post.isEdited}}
+          <span>•</span>
+          <span>(edited)</span>
+        {{/if}}
+      </div>
+
+      <div class="post-info">
+          <span><b>Location:</b> {{post.location}}</span>
+          <span><b>Store:</b> {{post.store}}</span>
+      </div>
+
+
+      
+
+      <div class="post-body">
+          {{post.description}}
+      </div>
+
+
+      <div class="post-actions">
+        <button class="icon-btn upvote reaction {{#if liked}}active{{/if}}" type="button" data-post-id="{{post._id}}" data-value="1">▲</button>
+        <span class="vote-score" id="score" data-score-for="{{post._id}}">{{post.score}}</span>
+        <button class="icon-btn downvote reaction {{#if disliked}}active{{/if}}" type="button" data-post-id="{{post._id}}" data-value="-1">▼</button>
+        <a class="icon-btn" id="commentJump" href="#comments">💬</a>
+        <span class="counts" id="commentCount">{{commentCount}}</span>
+      </div>
+
+      
+
+      <hr class="divider" />
+
+      {{#if post.isOwner}}
+        <div class="post-owner-actions">
+          <button type="button" class="small-btn edit-post-btn">Edit Post</button>
+
+          <form action="/post/{{post._id}}/delete" method="post" style="display:inline;">
+            <button type="submit" class="small-btn">Delete Post</button>
+          </form>
+        </div>
+
+        <form action="/post/{{post._id}}/edit" method="post" class="edit-post-form" hidden>
+          <hr class="divider" />
+          <input type="text" name="title" value="{{post.title}}" required>
+          <select id="location" name="location" required>
+            <option value="" selected disabled>Select location</option>
+            <option value="LS">LS</option>
+            <option value="Agno">Agno</option>
+            <option value="Andrew">Andrew</option>
+            <option value="Bloeman">Bloeman</option>
+            <option value="Other">Other</option>
+          </select>
+          <input type="text" name="store" value="{{post.store}}" required>
+          <input name="description" value="{{post.description}}" required>
+          <hr class="divider" />
+          <button type="submit" class="small-btn">Save</button>
+          <a class="small-btn" href="/post/{{post._id}}">Cancel</a>
+        </form>
+      {{/if}}
+
+      <hr class="divider" />
+
+      <section id="comments">
+        <h2 class="comments-title">Comments</h2>
+
+        {{#if user}}
+        <form action="/post/{{post._id}}/comment" method="POST" class="comment-form">
+            <textarea name="text" placeholder="Write a comment..." required></textarea>
+            <button type="submit" class="comment-btn">Post Comment</button>
+        </form>
+        {{else}}
+        <p><a href="/login">Log in</a> to comment.</p>
+        {{/if}}
+
+        {{#if comments.length}}
+            <div id="commentsList">
+                {{#each comments}}
+                    {{> comment user=../user}}
+                {{/each}}
+            </div>
+        {{else}}
+            <p>No comments yet.</p>
+        {{/if}}
+    </section>
+
+
+    </div>
+
+  </main>
+  
+<script src="/js/post.js"></script>
+<script src="/js/reaction.js"></script>
+  
+</body>
+</html>
+

@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>About - DLSU BITES</title>
+  <link rel="stylesheet" type="text/css" media="all" href="/css/style.css">
+
+</head>
+
+<body class="about">
+  <header class="topbar">
+    <div class="left">
+      <div class="brand">
+        <a class="logo" href="/"><img src="/logo.png"></img></a>
+        <a class="sitename" href="/">DLSU BITES</a>
+      </div>
+      <a href="/">Home</a>
+    </div>
+    <nav class="right">
+        {{#if user}}
+            <a href="/logout" id="logoutBtn" class="btn">Logout</a>
+        {{else}}
+            <a id="loginBtn" href="/login" class="btn">Login / Signup</a>
+        {{/if}}
+        
+    </nav>
+  </header>
+
+  <div class="middle">
+    <p>NPM packages used:</p>
+    <p>bcrypt</p>
+    <p>express</p>
+    <p>express-fileupload</p>
+    <p>express-session</p>
+    <p>hbs</p>
+    <p>mongodb</p>
+    <p>mongoose</p>
+  </div>
+
+  
+  
+
+  
+</body>
+</html>
+
