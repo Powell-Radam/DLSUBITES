@@ -1,0 +1,47 @@
+<div class="comment-box">
+    <div class="comment-meta">
+        <a class="comment-author" href="/profile/{{author}}">{{author}}</a>
+        <span>•</span>
+        <span class="date">{{createdAt}}</span>
+        {{#if isEdited}}
+            <span>•</span>
+            <span>(edited)</span>
+        {{/if}}
+    </div>
+
+    <div class="comment-text">
+        {{text}}
+    </div>
+
+    {{#if user}}
+    <button type="button" class="small-btn reply-btn">Reply</button>
+
+    {{#if isOwner}}
+        <button type="button" class="small-btn edit-comment-btn">Edit</button>
+
+        <form action="/comment/{{_id}}/delete" method="post" style="display:inline;">
+        <button type="submit" class="small-btn">Delete</button>
+        </form>
+
+        <form action="/comment/{{_id}}/edit" method="post" class="edit-comment-form" hidden>
+        <input name="text" value="{{text}}" required>
+        <button type="submit" class="small-btn">Save Edit</button>
+        </form>
+    {{/if}}
+
+    <form action="/post/{{postId}}/comment" method="post" class="reply-form" hidden>
+        <input type="hidden" name="parentId" value="{{_id}}">
+        <textarea name="text" placeholder="Write a reply..." required></textarea>
+        <button type="submit" class="small-btn">Post Reply</button>
+    </form>
+    {{/if}}
+
+    {{#if children.length}}
+    <div class="children">
+        {{#each children}}
+            {{> comment user=../user}}
+        {{/each}}
+    </div>
+    {{/if}}
+</div>
+
